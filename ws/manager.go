@@ -32,6 +32,7 @@ func NewManager() *manager {
 		events: make(map[string]EventHandler),
 	}
 	m.setupEventHandlers()
+	log.Println(m.events)
 	return m
 }
 func (m *manager) setupEventHandlers() {

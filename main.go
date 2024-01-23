@@ -20,5 +20,5 @@ func main() {
 	}
 
 	log.Println("Server is running: ", address)
-	log.Fatal(server.ListenAndServe()) 
+	log.Fatal(server.ListenAndServe())
 }
