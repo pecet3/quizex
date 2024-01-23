@@ -13,12 +13,12 @@ func main() {
 	http.Handle("/", index)
 	http.Handle("/ws", manager)
 
-	address := "0.0.0.0:8080" // Zmieniono port na standardowy dla HTTP
+	address := "0.0.0.0:8080"
 
 	server := &http.Server{
 		Addr: address,
 	}
 
 	log.Println("Server is running: ", address)
-	log.Fatal(server.ListenAndServe()) // Usunięto argumenty i zmieniono na ListenAndServe
+	log.Fatal(server.ListenAndServe()) 
 }

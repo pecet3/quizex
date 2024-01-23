@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"encoding/json"
 	"log"
 	"sync"
 
@@ -15,16 +16,26 @@ type client struct {
 	room    *room
 }
 
-func (c *client) read() {
+func (c *client) read(m *manager) {
 	defer c.conn.Close()
 
 	for {
-		_, msg, err := c.conn.ReadMessage()
+		_, payload, err := c.conn.ReadMessage()
 		if err != nil {
 			return
 		}
+		var request Event
 
-		c.room.forward <- msg
+		if err := json.Unmarshal(payload, &request); err != nil {
+			log.Println("error marshaling json", err)
+			break
+		}
+
+		if err := m.routeEvent(request, c); err != nil {
+			log.Println("error route event", err)
+			break
+		}
+		c.room.forward <- payload
 	}
 }
 
